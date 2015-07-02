@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -145,7 +146,7 @@ namespace MahApps.Metro.SimpleChildWindow
 			= DependencyProperty.Register("IsOpen",
 										  typeof(bool),
 										  typeof(ChildWindow),
-										  new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
+										  new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.AffectsArrange|FrameworkPropertyMetadataOptions.AffectsMeasure|FrameworkPropertyMetadataOptions.AffectsRender|FrameworkPropertyMetadataOptions.Inherits|FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, IsOpenedChanged));
 
 		public static readonly DependencyProperty ChildWindowWidthProperty
 			= DependencyProperty.Register("ChildWindowWidth",
@@ -388,6 +389,7 @@ namespace MahApps.Metro.SimpleChildWindow
 
 		private static void IsOpenedChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs e)
 		{
+			Debug.WriteLine(">>IsOpen change: " + e.NewValue);
 			var childWindow = (ChildWindow)dependencyObject;
 
 			Action openedChangedAction = () => {
@@ -402,12 +404,16 @@ namespace MahApps.Metro.SimpleChildWindow
 							childWindow.hideStoryboard.Completed -= childWindow.HideStoryboard_Completed;
 						}
 
-						Panel.SetZIndex(childWindow, 1);
+						Panel.SetZIndex(childWindow, 99);
+
+						Debug.WriteLine(">>childwindow on");
 
 						childWindow.TryFocusElement();
 					}
 					else
 					{
+						Debug.WriteLine(">>childwindow off");
+
 						if (childWindow.hideStoryboard != null)
 						{
 							childWindow.hideStoryboard.Completed += childWindow.HideStoryboard_Completed;
@@ -424,7 +430,7 @@ namespace MahApps.Metro.SimpleChildWindow
 				}
 			};
 
-			childWindow.Dispatcher.BeginInvoke(DispatcherPriority.Background, openedChangedAction);
+			childWindow.Dispatcher.BeginInvoke(DispatcherPriority.DataBind, openedChangedAction);
 		}
 
 		private void TryFocusElement()

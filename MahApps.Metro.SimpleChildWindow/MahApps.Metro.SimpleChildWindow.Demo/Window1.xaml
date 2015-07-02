@@ -1,0 +1,34 @@
+﻿<controls:MetroWindow x:Class="MahApps.Metro.SimpleChildWindow.Demo.Window1"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:simpleChildWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+        Title="Window1" Height="300" Width="300">
+	<simpleChildWindow:ChildWindow x:Name="child02"
+								   IsOpen="{Binding ElementName=mainWindow, Path=showwarning}"
+								   ChildWindowWidth="400"
+								   ChildWindowHeight="300"
+								   EnableDropShadow="False"
+								   Title="TestChild 2">
+		<Grid>
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+				<RowDefinition Height="Auto" />
+			</Grid.RowDefinitions>
+			<TextBlock Grid.Row="0"
+					   Margin="20"
+					   FontSize="36"
+					   FontWeight="Thin"
+					   Text="das hier auch" />
+			<TextBox Grid.Row="1" />
+			<Button Grid.Row="2"
+					Margin="20"
+					IsDefault="True"
+					VerticalAlignment="Top"
+					FontSize="20"
+					FontWeight="Thin"
+					Content="Close Me" />
+		</Grid>
+	</simpleChildWindow:ChildWindow>
+</controls:MetroWindow>

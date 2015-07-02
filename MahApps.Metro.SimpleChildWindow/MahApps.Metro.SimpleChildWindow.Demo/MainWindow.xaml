@@ -7,7 +7,8 @@
 					  Height="600"
 					  Width="800"
 					  GlowBrush="{DynamicResource AccentColorBrush}"
-					  WindowStartupLocation="CenterScreen">
+					  WindowStartupLocation="CenterScreen"
+					  x:Name="mainWindow">
 
 	<Grid x:Name="RootGrid">
 
@@ -71,6 +72,7 @@
 		</simpleChildWindow:ChildWindow>
 
 		<simpleChildWindow:ChildWindow x:Name="child02"
+									   IsOpen="{Binding ElementName=mainWindow, Path=showwarning}"
 									   ChildWindowWidth="400"
 									   ChildWindowHeight="300"
 									   EnableDropShadow="False"
